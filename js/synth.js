@@ -12,15 +12,18 @@ Synth.Initialize = function(){
   this.keyNames = new Array();
   this.keyFrequencies = new Array();
   this.numKeys = 64;
-  this.InitializePiano();
+  this.lastKeyPlayed = 0;
+  this.visibleKeysStart = 30; //default
+  this.visibleKeysEnd = 51; //default
   
+  this.InitializePiano();
   this.DrawKeysInRange(30,51);
 };
 
 Synth.DrawKeysInRange = function(startingAt, endingAt){
   'use strict';
   
-  var endingKeyIndex = startingAt + (endingAt - startingAt);
+  var endingKeyIndex = endingAt;
   
   if(endingKeyIndex > this.numKeys){
     console.log('[error] startingAt + endingAt is greater than ' + this.numKeys);
@@ -31,8 +34,13 @@ Synth.DrawKeysInRange = function(startingAt, endingAt){
     console.log('[error] endingAt must be greater than startingAt.');
     return undefined;
   }
+  
+  this.visibleKeysStart = startingAt;
+  this.visibleKeysEnd = endingAt;
 
   $('#pianoContainer').empty();
+  $('#txtBeginIndex').val(startingAt);
+  $('#txtEndIndex').val(endingAt);
 
   for(var i = startingAt; i < endingAt; i++){
     var isNoteSharp = this.keyNames[i].indexOf('#') != -1;
@@ -42,6 +50,7 @@ Synth.DrawKeysInRange = function(startingAt, endingAt){
     $(keyDom).addClass('noselect');
     $(keyDom).click(Synth.CreateKeyPlayCallback(i));
     $(keyDom).text(this.keyNames[i].substr(0, 2));
+    $(keyDom).attr('name', i.toString());
     
     /*
     var keyNameLength = this.keyNames[i].length;
@@ -67,9 +76,31 @@ Synth.CreateKeyPlayCallback = function(index){
 
 Synth.PlayKeyAt = function(index){
   'use strict';
-  var asyncAudioObject = $(this.keyObjects[index]).clone();
+  
+  if(index < 0 || index >= this.numKeys){
+    console.log('[error] Synth.PlayKeyAt - index out of bounds.');
+    return undefined;
+  }
+  
+  var keyObject = $(this.keyObjects[index]);
+  
+  
+  var asyncAudioObject = keyObject.clone();
   asyncAudioObject.attr('preload', 'true');
   asyncAudioObject.trigger('play');
+  
+  this.lastKeyPlayed = index;
+  
+  $('#lblLastKeyPlayed').text(this.keyNames[index]);
+  
+  keyObject = $('#pianoContainer div[name="' + index.toString() + '"]');
+  
+  keyObject.removeClass('pianoKeyHover');
+  keyObject.addClass('pianoKeyHover');
+  
+  setTimeout(function(){
+    keyObject.removeClass('pianoKeyHover');
+  }, 200);
 };
 
 Synth.InitializePiano = function(){

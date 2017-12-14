@@ -13,6 +13,7 @@ body,html{
   height:100vh;
   margin:0;
   padding:0;
+  min-width: 800px;
 }
 
 #mainContainer{
@@ -29,15 +30,27 @@ body,html{
 }
 
 #pianoContainer{
-  width:80%;
+  width:90%;
   height:300px;
   margin-top: 30px;
   display:flex;
   justify-content: center;
 }
 
-#keySelectorContainer{
-  width: 40%;
+
+#panelKeyMapping p:nth-of-type(2n){
+  color: green;
+  font-size: 16pt;
+}
+
+#tableKeyMappingContainer{
+  width: 100%;
+  padding: 0;
+}
+
+#tableKeyMapping{
+  transition: none;
+  margin-top: 20px;
 }
 
 div.pianoKey{
@@ -64,5 +77,9 @@ div.pianoKeySharp{
 }
 
 div.pianoKey:hover{
+  background-color:rgb(203, 203, 203);
+}
+
+div.pianoKeyHover{
   background-color:rgb(203, 203, 203);
 }

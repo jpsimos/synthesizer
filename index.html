@@ -14,21 +14,110 @@
 	<link rel="stylesheet" href="css/index.css" type="text/css">
 	<script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript" src="js/synth.js"></script>
+	<script type="text/javascript" src="js/keymap.js"></script>
+	<script type="text/javascript" src="js/invoker.js"></script>
 </head>
 <body>
 	<div class="container-fluid" id="mainContainer">
 		<div id="jobro-link" class="container">
-			<small>Sound files provided by <a href="https://freesound.org/people/jobro">Jobro</a></small>
+			<small>Sound files provided by <a href="https://freesound.org/people/jobro">Jobro</a></small> <br>
+			<small>Application written by Jacob Psimos</small>
 		</div>
 		<div class="container" id="pianoContainer">
 			<!-- filled via jquery -->
 		</div>
-		<div class="container">
+		<div class="container-fluid">
+			<!--
 			<div class="container" id="keySelectorContainer">
-				<select class="form-control">
-					<option>Value 1</option>
-					<option>Value 2</option>
-				</select>
+				<input type="number" class="form-control" id="txtBeginIndex" placeholder="Starting Key Index">
+				<input type="number" class="form-control" id="txtEndIndex" placeholder="Ending Key Index">
+			</div>
+			-->
+			<div class="container-fluid">
+				<div class="row">
+					
+					<div class="col-sm-6">
+						<!-- Key Mapping Panel-->
+						<div id="panelKeyMapping" class="panel panel-default">
+							<div class="panel-heading">
+								<span id="panelKeyMappingActive"></span>
+								<span> Key Mapping</span>
+							</div>
+							<div class="panel-body">
+								<p>Press the ~ key followed by a different key to map that key to the last note played.</p>
+								<p>Last key played: <span id="lblLastKeyPlayed"></span></p>
+								<div class="btn-group">
+									<input type="button" class="btn btn-default" value="Show Mapping" id="btnShowMapping">
+									<!--<input type="button" class="btn btn-info" value="Save Mapping" id="btnSaveMapping">-->
+									<input type="button" class="btn btn-warning" value="Reset Mapping" id="btnResetMapping">
+								</div>
+								<div id="tableKeyMappingContainer" class="container-fluid">
+									<table id="tableKeyMapping" class="table table-striped">
+										<thead>
+											<tr>
+												<td>Key</td>
+												<td>Note</td>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- Filled via javascript -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- End Key Mapping Panel -->
+					
+					<!-- Save/Restore Settings Panel -->
+					<div class="col-sm-6">
+						
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<span>Settings</span>
+							</div>
+							<div class="panel-body">
+								
+								<div>
+								
+									<div class="form" style="width: 50%; display: inline-block">
+										<span>Restore Settings: </span>
+										<select id="lstDisplayNames" class="form-control">
+											<!-- Filled via ajax -->
+										</select>
+										
+									</div>
+									
+									<input type="button" class="btn btn-success" id="btnLoadSettings" value="Load" />
+								
+								</div>
+								
+								<div>
+									<div class="form" style="width: 50%; display: inline-block">
+										<span>Save Settings: </span>
+										<input type="text" class="form-control" id="txtDisplayName" placeholder="Display Name">
+									</div>
+								
+									<input type="button" class="btn btn-primary" id="btnSaveSettings" value="Save"/>
+								</div>
+								
+								<div>
+									<div class="form" style="width: 25%; display: inline-block; padding-top: 20px">
+										<span>Starting Key Index: </span>
+										<input type="number" class="form-control" id="txtBeginIndex" placeholder="Starting Key Index">
+										<span>Ending Key Index: </span>
+										<input type="number" class="form-control" id="txtEndIndex" placeholder="Ending Key Index">
+									</div>
+									
+									<input type="button" class="btn btn-primary" id="btnApplyKeys" value="Apply" />
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<!-- End Save/Restore Settings Panel -->
+					
+				</div>
 			</div>
 		</div>
 	</div>

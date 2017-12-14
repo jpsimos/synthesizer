@@ -1,0 +1,19 @@
+DROP TABLE IF EXISTS personalSettings;
+DROP TABLE IF EXISTS people;
+
+CREATE TABLE people(
+	ID INTEGER PRIMARY KEY AUTOINCREMENT,
+	display_name VARCHAR(24) UNIQUE,
+	public TINYINT
+);
+
+CREATE TABLE personalSettings(
+	ID INTEGER PRIMARY KEY AUTOINCREMENT,
+	display_name VARCHAR(32) UNIQUE,
+	keys_start_at INTEGER,
+	keys_end_at INTEGER,
+	keys_map TEXT
+);
+
+INSERT INTO people(`display_name`,`public`) VALUES('jacob', 1);
+INSERT INTO personalSettings(display_name, keys_start_at, keys_end_at) VALUES('user 1', 24, 38);
